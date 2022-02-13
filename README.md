@@ -26,8 +26,11 @@ cdk deploy --parameters ec2InstanceId=EC2_INSTANCE_ID --parameters ec2LocalFolde
 ```
 
 > You need to replace the **EC2_INSTANCE_ID** with the **Existing EC2 instance id**.
+
 > You need to replace the **BUCKET_NAME** with the **S3 Bucket Arn**.
+
 > **Detail:** Make sure that your existing EC2 role has the following permissions into your S3 Bucket: "s3:GetObject", "s3:DeleteObject"
+
 
 ## Useful commands
  * `npm run build`   compile typescript to js
@@ -36,3 +39,4 @@ cdk deploy --parameters ec2InstanceId=EC2_INSTANCE_ID --parameters ec2LocalFolde
  * `cdk deploy`      deploy this stack to your default AWS account/region
  * `cdk diff`        compare deployed stack with current state
  * `cdk synth`       emits the synthesized CloudFormation template
+ * `cdk destroy`     removes the stack and all resources created by the stack
