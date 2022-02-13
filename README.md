@@ -1,6 +1,6 @@
 # CDK project to copy files from S3 to EC2
 
-This CDK project creates a trigger to copy files from a given S3 bucket to an existing EC2 server.
+This [CDK project](https://aws.amazon.com/cdk) creates a trigger to copy files from a given S3 bucket to an existing EC2 server.
 
 The solution uses an S3 notification event fired when a new file is created in the bucket to run a lambda function. The lambda function will get file details and run a python script through SSM Run Command to download the file to a specified folder and delete the S3 file after that.
 
@@ -14,23 +14,25 @@ In case of failure, the solution will send a alert to the specified email
  * emailToNotify: Email to notify in case of failure
 
 ## Objects created by this project
- * S3 Notification Event
- * Lambda Function
- * Cloudwath Alarm
- * SNS Topic
- * SNS Topic Subscription
+ * [S3 Notification Event](https://docs.aws.amazon.com/AmazonS3/latest/userguide/NotificationHowTo.html)
+ * [Lambda Function](https://docs.aws.amazon.com/lambda)
+ * [Cloudwath Alarm](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html)
+ * [SNS Topic](https://aws.amazon.com/sns)
+ * [SNS Topic Subscription](https://docs.aws.amazon.com/sns/latest/dg/sns-create-subscribe-endpoint-to-topic.html)
 
 ## Usage
 ```bash
-cdk deploy --parameters ec2InstanceId=EC2_INSTANCE_ID --parameters ec2LocalFolder=/tmp --parameters s3BucketArn=arn:aws:s3:::BUCKET_NAME --parameters s3BucketEventFilterSuffix=pdf --parameters emailToNotify=email@sample.com
+cdk deploy --parameters ec2InstanceId=EC2_INSTANCE_ID \
+  --parameters ec2LocalFolder=/tmp \
+  --parameters s3BucketArn=arn:aws:s3:::BUCKET_NAME \
+  --parameters s3BucketEventFilterSuffix=pdf \
+  --parameters emailToNotify=email@sample.com /
 ```
 
-> You need to replace the **EC2_INSTANCE_ID** with the **Existing EC2 instance id**.
+#### You need to change the parameters according to your need<br>
 
-> You need to replace the **BUCKET_NAME** with the **S3 Bucket Arn**.
-
-> **Detail:** Make sure that your existing EC2 role has the following permissions into your S3 Bucket: "s3:GetObject", "s3:DeleteObject"
-
+> **Detail:** Make sure your existing EC2 role has [SSM permissions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-getting-started-instance-profile.html) and the following permissions related with your S3 Bucket: "s3:GetObject", "s3:DeleteObject"<br>
+**ProTip:** The EC2 server needs to have the boto3 python library installed. If you don't already have it, you can install it with the command: pip3 install boto3
 
 ## Useful commands
  * `npm run build`   compile typescript to js
